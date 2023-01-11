@@ -38,13 +38,25 @@ public class InsertMessage extends HttpServlet {
 		int row;
 		String username = request.getParameter("username");
 		String messageText = request.getParameter("message");
+		String output = "";
 
 		row = saveMessage(username, messageText);
-		
+
 		if (row >= 1)
-			response.getWriter().append("Messaggio inserito");
+			output = "<h1>Messaggio inserito</h1>";
 		else
-			response.getWriter().append("Non e' stato possibile inserire il messaggio");
+			output = "<h1>Non e' stato possibile inserire il messaggio</h1>";
+
+		String messagesList = "";
+		try {
+			messagesList = DatabaseManagerSingleton.getInstance().getAllMessages();
+		} catch (ClassNotFoundException | IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		response.getWriter().append(output);
+		response.getWriter().append(messagesList);
 	}
 
 	/**
