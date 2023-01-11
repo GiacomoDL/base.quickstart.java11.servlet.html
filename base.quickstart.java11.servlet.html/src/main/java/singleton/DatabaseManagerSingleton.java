@@ -33,6 +33,49 @@ public class DatabaseManagerSingleton {
 		return instance;
 	}
 
+	public String getAllMessages() throws ClassNotFoundException, IOException, SQLException {
+
+		StringBuilder result = new StringBuilder();
+
+		Connection con = dbConnection();
+
+		PreparedStatement query = con.prepareStatement("SELECT * FROM messages");
+		ResultSet rs = query.executeQuery();
+
+		result.append("<html><body><table><tr>");
+		result.append("<th>id</th>");
+		result.append("<th>username</th>");
+		result.append("<th>message</th>");
+		result.append("<th>userInsertTime</th>");
+		result.append("<th>serverInsertTime</th>");
+		result.append("</tr>");
+
+		while (rs.next()) {
+			result.append("<tr>");
+			result.append("<td>");
+			result.append(rs.getString(1));
+			result.append("</td>");
+			result.append("<td>");
+			result.append(rs.getString(2));
+			result.append("</td>");
+			result.append("<td>");
+			result.append(rs.getString(3));
+			result.append("</td>");
+			result.append("<td>");
+			result.append(rs.getString(4));
+			result.append("</td>");
+			result.append("<td>");
+			result.append(rs.getString(5));
+			result.append("</td>");
+			result.append("</tr>");
+
+		}
+
+		result.append("</table></body></html>");
+		return result.toString();
+
+	}
+
 	public ArrayList<Message> getMessages(LocalDateTime clientCall)
 			throws ClassNotFoundException, SQLException, IOException {
 
@@ -71,7 +114,7 @@ public class DatabaseManagerSingleton {
 	}
 
 	public int insertMessage(Message message) throws ClassNotFoundException, SQLException, IOException {
-		
+
 		Connection con = dbConnection();
 		PreparedStatement query = con.prepareStatement(
 				"INSERT INTO messages (userName, textMessage, userInsertedTime, serverReceivedTime) VALUES (?,?,?,?)");
