@@ -27,4 +27,14 @@
     <servlet-name>MessagesList</servlet-name>
     <url-pattern>/MessagesList</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchMessages</display-name>
+    <servlet-name>SearchMessages</servlet-name>
+    <servlet-class>esempio.SearchMessages</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchMessages</servlet-name>
+    <url-pattern>/SearchMessages</url-pattern>
+  </servlet-mapping>
 </web-app>

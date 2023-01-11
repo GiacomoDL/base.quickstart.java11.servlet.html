@@ -6,18 +6,27 @@
 </head>
 <body>
 
-
 	<form action="./InsertMessage">
-		<label for="fname">Username:</label> 
+		<label>Username:</label> 
 		<br> 
 		<input type="text" name="username">
 		<br> 
-		<label for="lname">Message:</label>
+		<label>Message:</label>
 		<br> 
 		<input type="text" name="message">
 		<br>
 		<br> 
 		<input type="submit" value="Send message">
+	</form>
+	<br>
+	<br>
+	<form action="./SearchMessages">
+		<label>Date</label> 
+		<br> 
+		<input type="datetime-local" name="date">
+		<br>
+		<br> 
+		<input type="submit" value="Search messages">
 	</form>
 
 </body>

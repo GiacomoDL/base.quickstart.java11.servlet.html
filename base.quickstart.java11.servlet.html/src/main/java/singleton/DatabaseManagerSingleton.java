@@ -38,17 +38,7 @@ public class DatabaseManagerSingleton {
 
 		ArrayList<Message> messagesListToSendToCLient = new ArrayList<Message>();
 
-		PropertiesManagerSingleton pms = PropertiesManagerSingleton.getInstance();
-		String driver = pms.getProperty("database.mysql.driver");
-		Class.forName(driver);
-		String host = pms.getProperty("database.mysql.host");
-		String port = pms.getProperty("database.mysql.port");
-		String dbName = pms.getProperty("database.mysql.db.name");
-		String url = "jdbc:mariadb://" + host + ":" + port + "/" + dbName;
-
-		String username = pms.getProperty("database.mysql.db.username");
-		String password = pms.getProperty("database.mysql.db.password");
-		Connection con = DriverManager.getConnection(url, username, password);
+		Connection con = dbConnection();
 
 		PreparedStatement query = con.prepareStatement("SELECT * FROM messages WHERE userInsertedTime >= ?");
 		query.setTimestamp(1, java.sql.Timestamp.valueOf(clientCall));
@@ -81,18 +71,8 @@ public class DatabaseManagerSingleton {
 	}
 
 	public int insertMessage(Message message) throws ClassNotFoundException, SQLException, IOException {
-		PropertiesManagerSingleton pms = PropertiesManagerSingleton.getInstance();
-		String driver = pms.getProperty("database.mysql.driver");
-		Class.forName(driver);
-		String host = pms.getProperty("database.mysql.host");
-		String port = pms.getProperty("database.mysql.port");
-		String dbName = pms.getProperty("database.mysql.db.name");
-		String url = "jdbc:mariadb://" + host + ":" + port + "/" + dbName;
-
-		String username = pms.getProperty("database.mysql.db.username");
-		String password = pms.getProperty("database.mysql.db.password");
-		Connection con = DriverManager.getConnection(url, username, password);
-
+		
+		Connection con = dbConnection();
 		PreparedStatement query = con.prepareStatement(
 				"INSERT INTO messages (userName, textMessage, userInsertedTime, serverReceivedTime) VALUES (?,?,?,?)");
 
@@ -114,6 +94,21 @@ public class DatabaseManagerSingleton {
 	// delete
 	public void deleteMessage() throws ClassNotFoundException, SQLException, IOException {
 
+	}
+
+	private Connection dbConnection() throws IOException, ClassNotFoundException, SQLException {
+		PropertiesManagerSingleton pms = PropertiesManagerSingleton.getInstance();
+		String driver = pms.getProperty("database.mysql.driver");
+		Class.forName(driver);
+		String host = pms.getProperty("database.mysql.host");
+		String port = pms.getProperty("database.mysql.port");
+		String dbName = pms.getProperty("database.mysql.db.name");
+		String url = "jdbc:mariadb://" + host + ":" + port + "/" + dbName;
+
+		String username = pms.getProperty("database.mysql.db.username");
+		String password = pms.getProperty("database.mysql.db.password");
+		Connection con = DriverManager.getConnection(url, username, password);
+		return con;
 	}
 
 }
