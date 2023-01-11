@@ -46,8 +46,8 @@ public class DatabaseManagerSingleton {
 		result.append("<th>id</th>");
 		result.append("<th>username</th>");
 		result.append("<th>message</th>");
-		result.append("<th>userInsertTime</th>");
-		result.append("<th>serverInsertTime</th>");
+		result.append("<th>userInsertedTime</th>");
+		result.append("<th>serverInsertedTime</th>");
 		result.append("</tr>");
 
 		while (rs.next()) {
